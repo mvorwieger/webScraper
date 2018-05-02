@@ -1,0 +1,93 @@
+[
+    [
+        {
+            "type": "Sleep",
+            "datetime": "26 Apr 2018 00:16",
+            "Sleeping": "8:23",
+            "Awakenings": "0",
+            "Sleep Efficiency": "100 %"
+        },
+        {
+            "type": "Sleep",
+            "datetime": "25 Apr 2018 05:17",
+            "Sleeping": "2:23",
+            "Awakenings": "0",
+            "Sleep Efficiency": "100 %"
+        },
+        {
+            "type": "Sleep",
+            "datetime": "24 Apr 2018 22:40",
+            "Sleeping": "4:47",
+            "Awakenings": "0",
+            "Sleep Efficiency": "100 %"
+        }
+    ],
+    [
+        {
+            "type": "Steps",
+            "datetime": "26 Apr 2018",
+            "Distance": "9.5",
+            "Calories": "509",
+            "Min Heart Rate": "50",
+            "Avg Heart Rate": "63",
+            "Max Heart Rate": "79",
+            "Steps": "12,657"
+        },
+        {
+            "type": "Steps",
+            "datetime": "25 Apr 2018",
+            "Distance": "6.9",
+            "Calories": "375",
+            "Min Heart Rate": "56",
+            "Avg Heart Rate": "65",
+            "Max Heart Rate": "85",
+            "Steps": "10,308"
+        }
+    ],
+    [
+        {
+            "type": "Blood Pressure",
+            "datetime": "25 Apr 2018 22:19",
+            "Systolic": "109",
+            "Diastolic": "77",
+            "MAP": "87.7",
+            "Pulse": "72"
+        },
+        {
+            "type": "Blood Pressure",
+            "datetime": "25 Apr 2018 06:41",
+            "Systolic": "101",
+            "Diastolic": "74",
+            "MAP": "83",
+            "Pulse": "75"
+        },
+        {
+            "type": "Blood Pressure",
+            "datetime": "24 Apr 2018 19:58",
+            "Systolic": "111",
+            "Diastolic": "68",
+            "MAP": "82.3",
+            "Pulse": "67"
+        }
+    ],
+    [
+        {
+            "type": "Walking",
+            "datetime": "25 Apr 2018 18:27",
+            "Distance": "1.1",
+            "Duration": "20",
+            "Calories": "58",
+            "Avg Speed": "1",
+            "Max Speed": "1.2"
+        },
+        {
+            "type": "Walking",
+            "datetime": "25 Apr 2018 09:10",
+            "Distance": "618",
+            "Duration": "12",
+            "Calories": "35",
+            "Avg Speed": "1.1",
+            "Max Speed": "1.3"
+        }
+    ]
+]
