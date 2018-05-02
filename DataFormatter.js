@@ -37,7 +37,7 @@ class DataFormatter {
         /**
          * split of the index numbers that were concatinated by the flattening
          */
-        for (var key in modifiedData) {
+        for (let key in modifiedData) {
             if (modifiedData.hasOwnProperty(key)) {
                 modifiedData[key.split('.')[1]] = modifiedData[key];
                 delete modifiedData[key]
