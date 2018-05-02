@@ -1,4 +1,5 @@
 //imports
+require('dotenv').config()
 const DataController = require('./DataController.js');
 const Nightmare = require('nightmare');
 const nightmare = Nightmare({
@@ -9,8 +10,8 @@ const nightmare = Nightmare({
 
 
 //move this to env props or request user input
-const username = 'rm.social@t-online.de';
-const password = 'klarastrasse';
+const username = process.env.username;
+const password = process.env.password;
 
 //Config
 const streamQueries = 'Activity,Weight,BloodPressure,Glucose,Nutrition,Oxygen,Sleep,Temperature';
