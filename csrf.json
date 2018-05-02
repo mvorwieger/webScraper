@@ -1,8 +1,0 @@
-{
-  "host": "https://www.fitnesssyncer.com",
-  "loginFormId": "login",
-  "tokenFieldName": "csrf",
-  "loginUsernameField": "u",
-  "loginPasswordField": "p",
-  "loginPath": "/sign-in"
-}
