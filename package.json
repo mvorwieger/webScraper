@@ -6,9 +6,12 @@
   "author": "Scotch",
   "dependencies": {
     "cheerio": "latest",
+    "csv-mysql": "^1.0.3",
     "dotenv": "^5.0.1",
     "express": "latest",
     "json2csv": "^4.1.2",
-    "nightmare": "^3.0.1"
+    "mariasql": "^0.2.6",
+    "nightmare": "^3.0.1",
+    "object.entries": "^1.0.4"
   }
 }
