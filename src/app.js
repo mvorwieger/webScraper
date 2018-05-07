@@ -39,8 +39,8 @@ function startScraping() {
         .end()
         .then(data => DataController.dataHandler(data))
         .catch(err => console.error(err));
-    const oneDayInMsecs =
-    setTimeout(() => startScraping(), 500000)
+
+    //TODO: add schedueler Option
 };
 
 startScraping();
