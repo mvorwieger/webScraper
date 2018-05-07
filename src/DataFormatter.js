@@ -1,5 +1,5 @@
 /**
- * Used to formmat our data to csv standarts and to the need of a json object because we re retrieving our data as a
+ * Used to format our data to csv standards and to the need of a json object because we re retrieving our data as a
  * array of html dogshit
  */
 class DataFormatter {
@@ -13,7 +13,7 @@ class DataFormatter {
     }
 
     /**
-     * Used to Flatten Object / Arrays and potentionally Buffers
+     * Used to Flatten Object
      * @param object
      * @param separator
      * @return {{} & any}
@@ -84,9 +84,6 @@ class DataFormatter {
          */
 
         return `${formatedDate}${hour ? ' ' + hour : ''}`;
-    }
-
-    static formatHeaders(data) {
     }
 }
 

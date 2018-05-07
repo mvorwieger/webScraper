@@ -1,7 +1,6 @@
 const DataFormatter = require('./DataFormatter.js');
 const DataExporter = require('./DataExporter.js');
 const cheerio = require('cheerio');
-const DataBase = require('./DataBase.js');
 
 /**
  * used for overall controlling of our Application after the login emulation
@@ -67,6 +66,7 @@ class DataController {
         });
         let filteredData = DataFormatter.gatherByTypes(exportData, typeArr);
         let exporter = new DataExporter(filteredData);
+
         exporter.exportAsJSONTo('./data.json');
         exporter.exportAsCSV();
     }

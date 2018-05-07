@@ -3,10 +3,9 @@ const {getApiUrl, getLoginUrl} = require('./uri.js');
 
 /**
  * Dotenv
- * Needed for loading our evniroment variables on a local build
+ * Needed for loading our environment variables on a local build
  */
 require('dotenv').config();
-const getDateTime = require('./dateTime.js');
 const DataController = require('./DataController.js');
 /**
  * Used to emulate user behaviour on their website to prevent web scraping preventions build into their site
@@ -37,10 +36,10 @@ function startScraping() {
         .wait('pre')
         .evaluate(() => document.body.innerHTML)
         .end()
-        .then(data => DataController.dataHandler(data))
-        .catch(err => console.error(err));
+        .then(DataController.dataHandler)
+        .catch(console.error);
 
-    //TODO: add schedueler Option
-};
+    //TODO: add scheduler Option
+}
 
 startScraping();
