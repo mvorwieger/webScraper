@@ -1,17 +1,15 @@
 {
   "name": "node-web-scrape",
-  "version": "0.0.1",
-  "description": "Scrape le web.",
-  "main": "server.js",
-  "author": "Scotch",
+  "version": "0.1.0",
+  "description": "basic web scraper with Nodejs",
+  "main": "app.js",
+  "author": "Michel Vorwieger",
   "dependencies": {
     "cheerio": "latest",
     "csv-mysql": "^1.0.3",
     "dotenv": "^5.0.1",
-    "express": "latest",
     "json2csv": "^4.1.2",
     "mariasql": "^0.2.6",
-    "nightmare": "^3.0.1",
-    "object.entries": "^1.0.4"
+    "nightmare": "^3.0.1"
   }
 }

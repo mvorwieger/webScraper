@@ -39,7 +39,7 @@ class DataExporter {
                     if (err) {
                         console.log(err)
                     } else {
-                        db.sendData({head: [...fields.values()], body: objArr}, objArr[0].type.split(' ').join('_').toLowerCase());
+                        db.sendData({head: [...fields.values()], body: objArr}, objArr[0].type.split(' ').join('_').replace('-','_').toLowerCase());
                     }
                 })
             });

@@ -121,7 +121,7 @@ class DataBase {
                 return obj;
             }).join('), (') + ')';
 
-            const query = `insert ignore into ${tableName}(${data.head.join(',')}) values ${values}`;
+            const query = `insert ignore into ${tableName}(${data.head.join(',').replace('_%', '')}) values ${values}`;
 
             this.client.query(query, (err, d) => {
                 if(err) {

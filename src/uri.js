@@ -4,7 +4,7 @@ function getApiUrl() {
     const streamQueries = 'Activity,Weight,BloodPressure,Glucose,Nutrition,Oxygen,Sleep,Temperature',
         today = getDateTime(),
         offset = 0,
-        limit = 10,
+        limit = 1000,
         startMonth = 'Feb',
         startDay = 1,
         startYear = 2018,
