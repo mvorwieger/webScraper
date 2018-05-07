@@ -48,7 +48,7 @@ class DataFormatter {
      * @param specificData
      * @return {{}&any}
      */
-    static realFlatten(specificData) {
+    static formatPropertyNames(specificData) {
         /**
          * Flatten the object
          */
@@ -59,12 +59,34 @@ class DataFormatter {
          */
         for (let key in modifiedData) {
             if (modifiedData.hasOwnProperty(key)) {
-                modifiedData[key.split('.')[1]] = modifiedData[key];
+                modifiedData[key.split('.')[1].split(' ').join('_')] = modifiedData[key];
                 delete modifiedData[key]
             }
         }
 
         return modifiedData;
+    }
+
+    /**
+     * Formats the date to a Date that mariaDb can use
+     * @param date
+     * @return {string}
+     */
+    static formatDate(date) {
+        const monthnames = ['','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        let [day, month, year, hour, ...rest] = date.split(' ');
+        const monthNumber = monthnames.indexOf(month);
+        const formatedDate = [year, monthNumber, day].join('-');
+        /**
+        if(hour && hour.split(':').length < 3) {
+            hour += ':00';
+        }
+         */
+
+        return `${formatedDate}${hour ? ' ' + hour : ''}`;
+    }
+
+    static formatHeaders(data) {
     }
 }
 

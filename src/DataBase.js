@@ -20,103 +20,117 @@ class DataBase {
             };
 
         this.client = new Client(this.options.mysql);
-        this.createTables();
     }
 
     createTables() {
-        const blood_pressure = "CREATE TABLE IF NOT EXISTS blood_pressure(\n" +
-            "   datetime  VARCHAR(20)  NOT NULL PRIMARY KEY\n" +
-            "  ,Systolic  INTEGER  NOT NULL\n" +
-            "  ,Diastolic INTEGER  NOT NULL\n" +
-            "  ,MAP       NUMERIC(5,1) NOT NULL\n" +
-            "  ,Pulse     INTEGER  NOT NULL\n" +
-            ");";
+        return new Promise((resolve, reject) => {
+            const blood_pressure = "CREATE TABLE IF NOT EXISTS blood_pressure(\n" +
+                "   datetime  DATETIME   PRIMARY KEY\n" +
+                "  ,systolic  INTEGER  \n" +
+                "  ,diastolic INTEGER  \n" +
+                "  ,map       NUMERIC(5,1) \n" +
+                "  ,pulse     INTEGER  \n" +
+                ");";
 
-        const elliptical = "CREATE TABLE IF NOT EXISTS elliptical(\n" +
-            "   datetime       VARCHAR(20)  NOT NULL PRIMARY KEY\n" +
-            "  ,Duration       INTEGER  NOT NULL\n" +
-            "  ,Calories       INTEGER  NOT NULL\n" +
-            "  ,Min_Heart_Rate INTEGER  NOT NULL\n" +
-            "  ,Avg_Heart_Rate INTEGER  NOT NULL\n" +
-            "  ,Max_Heart_Rate INTEGER  NOT NULL\n" +
-            ");";
+            const elliptical = "CREATE TABLE IF NOT EXISTS elliptical(\n" +
+                "   datetime       DATETIME   PRIMARY KEY\n" +
+                "  ,duration       INTEGER\n" +
+                "  ,calories       INTEGER  \n" +
+                "  ,min_heart_rate INTEGER  \n" +
+                "  ,avg_heart_rate INTEGER  \n" +
+                "  ,max_heart_rate INTEGER  \n" +
+                ");";
 
-        const other = "CREATE TABLE IF NOT EXISTS other(\n" +
-            "   datetime       VARCHAR(20)  NOT NULL PRIMARY KEY\n" +
-            "  ,Duration       INTEGER  NOT NULL\n" +
-            "  ,Calories       INTEGER  NOT NULL\n" +
-            "  ,Min_Heart_Rate INTEGER  NOT NULL\n" +
-            "  ,Avg_Heart_Rate INTEGER  NOT NULL\n" +
-            "  ,Max_Heart_Rate INTEGER  NOT NULL\n" +
-            ");";
+            const other = "CREATE TABLE IF NOT EXISTS other(\n" +
+                "   datetime       DATETIME   PRIMARY KEY\n" +
+                "  ,duration       INTEGER\n" +
+                "  ,calories       INTEGER  \n" +
+                "  ,min_heart_rate INTEGER  \n" +
+                "  ,avg_heart_rate INTEGER  \n" +
+                "  ,max_heart_rate INTEGER  \n" +
+                ");";
 
-        const sleep = "CREATE TABLE IF NOT EXISTS sleep(\n" +
-            "   datetime         VARCHAR(20)  NOT NULL PRIMARY KEY\n" +
-            "  ,Sleeping         NUMERIC(3,1) NOT NULL\n" +
-            "  ,Awakenings       BIT  NOT NULL\n" +
-            "  ,Sleep_Efficiency INTEGER  NOT NULL\n" +
-            ");";
+            const sleep = "CREATE TABLE IF NOT EXISTS sleep(\n" +
+                "   datetime         DATETIME   PRIMARY KEY\n" +
+                "  ,sleeping         NUMERIC(3,1) \n" +
+                "  ,awakenings       BIT  \n" +
+                "  ,sleep_efficiency INTEGER  \n" +
+                ");";
 
-        const steps = "CREATE TABLE IF NOT EXISTS steps(\n" +
-            "   datetime       VARCHAR(20)  NOT NULL PRIMARY KEY\n" +
-            "  ,Distance       NUMERIC(4,1) NOT NULL\n" +
-            "  ,Calories       INTEGER  NOT NULL\n" +
-            "  ,Min_Heart_Rate INTEGER  NOT NULL\n" +
-            "  ,Avg_Heart_Rate INTEGER  NOT NULL\n" +
-            "  ,Max_Heart_Rate INTEGER  NOT NULL\n" +
-            "  ,Steps          INTEGER  NOT NULL\n" +
-            ");";
+            const steps = "CREATE TABLE IF NOT EXISTS steps(\n" +
+                "   datetime       DATE   PRIMARY KEY\n" +
+                "  ,distance       NUMERIC(4,1) \n" +
+                "  ,calories       INTEGER  \n" +
+                "  ,min_heart_rate INTEGER  \n" +
+                "  ,avg_heart_rate INTEGER  \n" +
+                "  ,max_heart_rate INTEGER  \n" +
+                "  ,steps          INTEGER  \n" +
+                ");";
 
-        const walking = "CREATE TABLE IF NOT EXISTS walking(\n" +
-            "   datetime  VARCHAR(20)  NOT NULL PRIMARY KEY\n" +
-            "  ,Distance  NUMERIC(4,1) NOT NULL\n" +
-            "  ,Calories  INTEGER  NOT NULL\n" +
-            "  ,Min_Heart_Rate INTEGER  NOT NULL\n" +
-            "  ,Avg_Heart_Rate INTEGER  NOT NULL\n" +
-            "  ,Max_Heart_Rate INTEGER  NOT NULL\n" +
-            "  ,Steps     INTEGER  NOT NULL\n" +
-            ");";
+            const walking = "CREATE TABLE IF NOT EXISTS walking(\n" +
+                "   datetime  DATETIME  PRIMARY KEY\n" +
+                "  ,Distance  NUMERIC(4,1) \n" +
+                "  ,Duration  INTEGER  \n" +
+                "  ,Calories  INTEGER  \n" +
+                "  ,Avg_Speed NUMERIC(3,1) \n" +
+                "  ,Max_Speed NUMERIC(3,1) \n" +
+                "  ,Pace      INTEGER \n" +
+                ");";
 
-        const weigh_in = "CREATE TABLE IF NOT EXISTS weigh_in(\n" +
-            "   datetime         VARCHAR(20)  NOT NULL PRIMARY KEY\n" +
-            "  ,Weight           NUMERIC(4,1) NOT NULL\n" +
-            "  ,BMI              NUMERIC(4,1) NOT NULL\n" +
-            "  ,Fat_Free_Mass    NUMERIC(4,1) NOT NULL\n" +
-            "  ,Fat_Mass_Weight  NUMERIC(4,1) NOT NULL\n" +
-            "  ,Fat_Ratio        NUMERIC(4,1) NOT NULL\n" +
-            "  ,Body_Water_      NUMERIC(4,1)\n" +
-            "  ,Body_Mass        NUMERIC(4,1) NOT NULL\n" +
-            "  ,Bone_Mass        NUMERIC(4,1) NOT NULL\n" +
-            "  ,Body_Muscle_Mass NUMERIC(4,1) NOT NULL\n" +
-            ");";
+            const weigh_in = "CREATE TABLE IF NOT EXISTS weigh_in(\n" +
+                "   datetime         DATETIME   PRIMARY KEY\n" +
+                "  ,weight           NUMERIC(4,1) \n" +
+                "  ,bmi              NUMERIC(4,1) \n" +
+                "  ,fat_free_mass    NUMERIC(4,1) \n" +
+                "  ,fat_mass_weight  NUMERIC(4,1) \n" +
+                "  ,fat_ratio        NUMERIC(4,1) \n" +
+                "  ,body_water      NUMERIC(4,1)\n" +
+                "  ,body_mass        NUMERIC(4,1) \n" +
+                "  ,bone_mass        NUMERIC(4,1) \n" +
+                "  ,body_muscle_mass NUMERIC(4,1) \n" +
+                ");";
 
-        const weights = "CREATE TABLE IF NOT EXISTS weights(\n" +
-            "   datetime VARCHAR(20)  NOT NULL PRIMARY KEY\n" +
-            "  ,Duration BIT  NOT NULL\n" +
-            "  ,Calories INTEGER  NOT NULL\n" +
-            ");";
+            const weights = "CREATE TABLE IF NOT EXISTS weights(\n" +
+                "   datetime DATETIME   PRIMARY KEY\n" +
+                "  ,duration INTEGER \n" +
+                "  ,calories INTEGER\n" +
+                ");";
 
-        const queryArr = [blood_pressure, elliptical, other, sleep, steps, walking, weigh_in, weights];
-        queryArr.forEach(sql => this.client.query(sql, (err, d) => console.log(err, d)));
+            const queryArr = [blood_pressure, elliptical, other, sleep, steps, walking, weigh_in, weights];
+            queryArr.forEach(sql => this.client.query(sql, (err, d) => {
+                if(err) console.log(err);
+                resolve(true);
+            }));
+
+        });
     };
 
-    sendData(data) {
-        fs.readdir('./csv', (err, files) => {
-            files.forEach(filename => {
-                const noEnding = filename.split('.')[0].split(" ").join("_");
-                this.options.table = noEnding;
-                cm.import(this.options, data, function(err, rows) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log(rows);
-                    }
-                });
-            })
-        });
-    }
+    sendData(data, tableName) {
+        this.createTables().then(resolved => {
+            const values = '(' + data.body.map(d => {
+                let obj = Object.values(d).map((d, index) => index === 0 ? "'" + d + "'" : d)
+                    .filter((val, index) => index != 1);
+                /**
+                 * We have to push 0 for non existing elements
+                 * because we cant have undefined parameters in our query
+                 */
+                if(obj.length < data.head.length) {
+                    obj.push(0);
+                }
 
-    disconnect() {
+                return obj;
+            }).join('), (') + ')';
+
+            const query = `insert ignore into ${tableName}(${data.head.join(',')}) values ${values}`;
+
+            this.client.query(query, (err, d) => {
+                if(err) {
+                    console.log(query);
+                    console.log(err);
+                }
+                else console.log(tableName + '[Success]');
+            });
+        });
     }
 }
 

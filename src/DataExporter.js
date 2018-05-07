@@ -39,8 +39,7 @@ class DataExporter {
                     if (err) {
                         console.log(err)
                     } else {
-                        console.log(`./csv/${objArr[0].type}.csv has been successfully created`);
-                        db.sendData(csv);
+                        db.sendData({head: [...fields.values()], body: objArr}, objArr[0].type.split(' ').join('_').toLowerCase());
                     }
                 })
             });

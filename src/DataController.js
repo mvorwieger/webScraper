@@ -60,9 +60,9 @@ class DataController {
             });
 
             return {
-                datetime,
+                datetime: DataFormatter.formatDate(datetime),
                 type,
-                ...DataFormatter.realFlatten(specificData)
+                ...DataFormatter.formatPropertyNames(specificData)
             }
         });
         let filteredData = DataFormatter.gatherByTypes(exportData, typeArr);
