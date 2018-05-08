@@ -38,6 +38,9 @@ class DataBase {
     };
 
     sendData(data, tableName) {
+        /**
+         * Make sure to create Tables if they don't exist before we send the Data
+         */
         this.createTables().then(resolved => {
             const values = '(' + data.body.map(d => {
                 /**

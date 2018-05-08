@@ -77,13 +77,21 @@ class DataFormatter {
         let [day, month, year, hour, ...rest] = date.split(' ');
         const monthNumber = monthnames.indexOf(month);
         const formatedDate = [year, monthNumber, day].join('-');
-        /**
-        if(hour && hour.split(':').length < 3) {
-            hour += ':00';
-        }
-         */
 
         return `${formatedDate}${hour ? ' ' + hour : ''}`;
+    }
+
+    /**
+     * creates {label: value}
+     * out of
+     * {label:labelName, value: valueNumber}
+     * @param arr: Array<{label, value, unit?}>
+     * @public
+     */
+    static createObjectOutOfArr(arr) {
+        return arr.map(data => {
+            return {[data.label]: data.value}
+        })
     }
 }
 

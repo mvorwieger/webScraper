@@ -6,7 +6,17 @@ const cheerio = require('cheerio');
  * used for overall controlling of our Application after the login emulation
  */
 class DataController {
-    static dataHandler(data) {
+    /**
+     * Logic after Browser emulation
+     * @param data
+     * @return {
+     *              datetime,
+     *              type,
+     *              ...specificData
+     *          }
+     * @private
+     */
+    static _filterOutData(data) {
         //Used to gather type information
         let typeArr = [];
 
@@ -21,13 +31,8 @@ class DataController {
          * @type {Int32Array}
          */
         let exportData = pureDataArr.map(data => {
-            //Render the dom part we need with cheerio
             let pcData = cheerio.load(data);
-
-            //Storage for the Data
             let specificData = [];
-
-            //Get title and datetime of activity
             let type = pcData('.title span').text();
 
             /**
@@ -50,13 +55,7 @@ class DataController {
                 });
             });
 
-            /**
-             * modified data to label : value pairs
-             * @type {any[]}
-             */
-            specificData = specificData.map(data => {
-                return {[data.label]: data.value}
-            });
+            specificData = DataFormatter.createObjectOutOfArr(specificData);
 
             return {
                 datetime: DataFormatter.formatDate(datetime),
@@ -64,12 +63,17 @@ class DataController {
                 ...DataFormatter.formatPropertyNames(specificData)
             }
         });
-        let filteredData = DataFormatter.gatherByTypes(exportData, typeArr);
-        let exporter = new DataExporter(filteredData);
 
-        exporter.exportAsJSONTo('./data.json');
-        exporter.exportAsCSV();
+        return DataFormatter.gatherByTypes(exportData, typeArr);
     }
+
+
+    static dataHandler(data) {
+        let exporter = new DataExporter(DataController._filterOutData(data));
+        exporter.exportAsCSV();
+        //exporter.exportToDb();
+    }
+
 }
 
 module.exports = DataController;

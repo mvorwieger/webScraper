@@ -38,8 +38,6 @@ function startScraping() {
         .end()
         .then(DataController.dataHandler)
         .catch(console.error);
-
-    //TODO: add scheduler Option
 }
-
+//TODO: add scheduler Option
 startScraping();
