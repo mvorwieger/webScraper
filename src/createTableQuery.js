@@ -1,3 +1,8 @@
+/**
+ * Create Table query
+ * @returns Array<Query>
+ */
+
 const blood_pressure = "CREATE TABLE IF NOT EXISTS blood_pressure(\n" +
     "   datetime  DATETIME   PRIMARY KEY\n" +
     "  ,systolic  INTEGER  \n" +
@@ -70,6 +75,13 @@ const weights = "CREATE TABLE IF NOT EXISTS weights(\n" +
     "  ,calories INTEGER\n" +
     ");";
 
+/**
+ *  Uncomment the Line underneath to log the Querys into to console.
+ */
+
+//console.log(queryArr());
+
 const queryArr = () => [blood_pressure, elliptical, other, sleep, steps, walking, weigh_in, weights];
+
 
 module.exports = queryArr;

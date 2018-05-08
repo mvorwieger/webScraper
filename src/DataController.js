@@ -70,8 +70,8 @@ class DataController {
 
     static dataHandler(data) {
         let exporter = new DataExporter(DataController._filterOutData(data));
+        exporter.exportAsJSONTo('data.json');
         exporter.exportAsCSV();
-        //exporter.exportToDb();
     }
 
 }
