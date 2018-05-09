@@ -38,7 +38,6 @@ class DataExporter {
                 head: [...fields.values()],
                 body: dataset
             }, dataset[0].type.split(' ').join('_').replace('-', '_').toLowerCase());
-
         })
     }
 

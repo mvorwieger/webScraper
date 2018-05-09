@@ -18,65 +18,68 @@ class DataController {
      * @private
      */
     static _filterOutData(data) {
-        //Used to gather type information
-        let typeArr = [];
-
-        let cData = cheerio.load(data);
-        let parsedData = JSON.parse(cData('pre').text());
-        let pureDataArr = parsedData.data
+        const cheerioData = cheerio.load(data);
+        const parsedData = JSON.parse(cheerioData('pre').text());
+        const pureDataArr = parsedData.data
             .map(data => data[0])
             .filter(data => data !== 'Data for Stream');
 
-        /**
-         * Map through the Array that is filled with html content
-         * @type {Int32Array}
-         */
-        let exportData = pureDataArr.map(data => {
+        let typeNamesCollection = [];
+        const exportData = DataController._b(pureDataArr, typeNamesCollection, cheerioData);
+
+        return DataFormatter.gatherByTypes(exportData, typeNamesCollection);
+    }
+
+    static _findDataStructur(originalCheerioObject, cheerioObject) {
+        let specDataArr = cheerioObject;
+        let dataStructure = [];
+
+        specDataArr.each(function() {
+            dataStructure.push({
+                label: originalCheerioObject(this).find('.label').text(),
+                value: parseFloat(originalCheerioObject(this).find('.value').text()),
+                unit: originalCheerioObject(this).find('.unit').text()
+            });
+        });
+
+        return dataStructure;
+    }
+
+    static _b(htmlArrayToFilterDataOutOf, typeNamesArray, cheerioObject) {
+        return htmlArrayToFilterDataOutOf.map(data => {
             let pcData = cheerio.load(data);
-            let specificData = [];
             let type = pcData('.title span').text();
 
             /**
              * Gather Type-names
              */
-            if (!typeArr.find((typeInArr) => typeInArr === type)) {
-                typeArr.push(type);
+            if (!typeNamesArray.find((typeInArr) => typeInArr === type)) {
+                typeNamesArray.push(type);
             }
 
             /**
              * Filter out the relevant Data and collect it in the Array
              */
             let datetime = pcData('.datetime').text();
-            let specDataArr = pcData('.kpi');
-            specDataArr.each(function() {
-                specificData.push({
-                    label: cData(this).find('.label').text(),
-                    value: parseFloat(cData(this).find('.value').text()),
-                    unit: cData(this).find('.unit').text()
-                });
-            });
+            let convertedData = DataController._findDataStructur(cheerioObject ,pcData('.kpi'));
 
-            specificData = DataFormatter.createObjectOutOfArr(specificData);
+            convertedData = DataFormatter.createObjectOutOfArr(convertedData);
 
             return {
                 datetime: DataFormatter.formatDate(datetime),
                 type,
-                ...DataFormatter.formatPropertyNames(specificData)
+                ...DataFormatter.formatPropertyNames(convertedData)
             }
         });
-
-        return DataFormatter.gatherByTypes(exportData, typeArr);
     }
-
-
     static dataHandler(data) {
         let db = new DataBase(process.env.dbhost, process.env.dbuser, process.env.dbpassword, process.env.dbname);
         let exporter = new DataExporter(DataController._filterOutData(data));
+
         exporter.exportToDatabase(db);
         exporter.exportAsJSONTo('data.json');
         exporter.exportAsCSV();
     }
-
 }
 
 module.exports = DataController;
