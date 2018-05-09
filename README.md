@@ -1,4 +1,7 @@
 # Node JS Webscraper
+Download or Clone the Project
+
+cd into the Project Root Folder
 
 to install:`npm install --save`
 
