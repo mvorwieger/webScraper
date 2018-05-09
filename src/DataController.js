@@ -72,6 +72,7 @@ class DataController {
             }
         });
     }
+
     static dataHandler(data) {
         let db = new DataBase(process.env.dbhost, process.env.dbuser, process.env.dbpassword, process.env.dbname);
         let exporter = new DataExporter(DataController._filterOutData(data));
