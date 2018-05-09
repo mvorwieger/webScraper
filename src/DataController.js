@@ -1,5 +1,6 @@
 const DataFormatter = require('./DataFormatter.js');
 const DataExporter = require('./DataExporter.js');
+const DataBase = require('./DataBase.js');
 const cheerio = require('cheerio');
 
 /**
@@ -69,7 +70,9 @@ class DataController {
 
 
     static dataHandler(data) {
+        let db = new DataBase(process.env.dbhost, process.env.dbuser, process.env.dbpassword, process.env.dbname);
         let exporter = new DataExporter(DataController._filterOutData(data));
+        exporter.exportToDatabase(db);
         exporter.exportAsJSONTo('data.json');
         exporter.exportAsCSV();
     }

@@ -68,7 +68,7 @@ class DataBase {
                     console.log(query);
                     console.log(err);
                 }
-                else console.log(tableName + '[Success]');
+                else console.log(tableName + '[DataBase Success]');
             });
         });
     }

@@ -11,39 +11,36 @@ class DataExporter {
     }
 
     exportAsCSV() {
-        let db = new DataBase(process.env.dbhost, process.env.dbuser, process.env.dbpassword, process.env.dbname);
+        this.dataToExport.forEach(dataset => {
+            const fields = this._collectTypenames(dataset);
+            const csv = this._parseCSV(dataset, [...fields.values()]);
+            const writePath = `./csv/${dataset[0].type}.csv`.toLowerCase();
 
-            this.dataToExport.forEach(objArr => {
-                /**
-                 * Using a Set because we don't want double entries
-                 * @type {Set<any>}
-                 */
-                const fields = new Set();
-                /**
-                 * Get Field names of the property Keys
-                 * and take out the type because we don't need it
-                 */
-                objArr.forEach(obj => {
-                    Object.entries(obj).map(d => d[0]).forEach(data => {
-                        fields.has(data) || data === 'type' ? console.log() : fields.add(data);
-                    });
-                });
-                /**
-                 * Set the Field names and parse our json data
-                 * @type {JSON2CSVParser}
-                 */
-                const json2csvParser = new JsonToCSVParser({fields: [...fields.values()]});
-                const csv = json2csvParser.parse(objArr);
+            fs.writeFile(writePath, csv, err => {
+                if (err) {
+                    throw err;
+                } else {
+                    console.log(writePath + ' created');
+                }
+            })
+        });
+    }
 
-                fs.writeFile(`./csv/${objArr[0].type}.csv`.toLowerCase(), csv, err => {
-                    if (err) {
-                        console.log(err)
-                    } else {
-                        db.sendData({head: [...fields.values()], body: objArr}, objArr[0].type.split(' ').join('_').replace('-','_').toLowerCase());
-                    }
-                })
-            });
-        }
+    /**
+     * @param database: DataBase
+     */
+    exportToDatabase(database) {
+        this.dataToExport.forEach(dataset => {
+            const fields = this._collectTypenames(dataset);
+            const csv = this._parseCSV(dataset, [...fields.values()]);
+
+            database.sendData({
+                head: [...fields.values()],
+                body: dataset
+            }, dataset[0].type.split(' ').join('_').replace('-', '_').toLowerCase());
+
+        })
+    }
 
     /**
      * Export the Data constructed with this Object as Json
@@ -54,9 +51,43 @@ class DataExporter {
             if (err) {
                 console.log(err);
             } else {
-                console.log('file has been successfully created');
+                console.log(path + ' created');
             }
         });
+    }
+
+    /**
+     * @param set
+     * @return {Set<any>}
+     * @private
+     */
+    _collectTypenames(set) {
+        /**
+         * Using a Set because we don't want double entries
+         * @type {Set<any>}
+         */
+        const fields = new Set();
+
+        set.forEach(obj => {
+            Object.entries(obj).map(d => d[0]).forEach(typename => {
+                if (!(fields.has(typename) || typename === 'type')) {
+                    fields.add(typename);
+                }
+            });
+        });
+
+        return fields;
+    }
+
+    /**
+     * @param csvData
+     * @param fieldNames
+     * @return {String}
+     * @private
+     */
+    _parseCSV(csvData, fieldNames) {
+        const json2csvParser = new JsonToCSVParser({fields: fieldNames});
+        return json2csvParser.parse(csvData);
     }
 }
 
