@@ -6,7 +6,7 @@ const {getApiUrl, getLoginUrl} = require('./uri.js');
  * Needed for loading our environment variables on a local build
  */
 require('dotenv').config();
-const DataController = require('./DataController.js');
+const DataController = require('./DataFilter.js');
 /**
  * Used to emulate user behaviour on their website to prevent web scraping preventions build into their site
  * @type {Nightmare}
@@ -36,7 +36,10 @@ function startScraping() {
         .wait('pre')
         .evaluate(() => document.body.innerHTML)
         .end()
-        .then(DataController.dataHandler)
+        .then(backEndResponse => {
+            const dataHandler = new DataController(backEndResponse)
+            dataHandler.startFiltering();
+        })
         .catch(console.error);
 }
 //TODO: add scheduler Option
