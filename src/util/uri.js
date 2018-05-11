@@ -18,8 +18,12 @@ function getApiUrl() {
     return uri;
 }
 
+function getReferrerUrl() {
+    return 'https://www.fitnesssyncer.com/stream';
+}
+
 function getLoginUrl() {
     return 'https://www.fitnesssyncer.com/sign-in';
 }
 
-module.exports = {getApiUrl, getLoginUrl};
+module.exports = {getApiUrl, getLoginUrl, getReferrerUrl};

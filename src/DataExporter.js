@@ -13,7 +13,7 @@ class DataExporter {
     exportAsCSV() {
         this.dataToExport.forEach(dataset => {
             const fields = this._collectTypenames(dataset);
-            const csv = this._parseCSV(dataset, [...fields.values()]);
+            const csv = this._parseCSV(dataset, fields);
             const writePath = `./csv/${dataset[0].type}.csv`.toLowerCase();
 
             fs.writeFile(writePath, csv, err => {
@@ -32,12 +32,13 @@ class DataExporter {
     exportToDatabase(database) {
         this.dataToExport.forEach(dataset => {
             const fields = this._collectTypenames(dataset);
-            const csv = this._parseCSV(dataset, [...fields.values()]);
+            const csv = this._parseCSV(dataset, fields);
+            const formattedType = dataset[0].type.split(' ').join('_').replace('-', '_').toLowerCase();
 
-            database.sendData({
-                head: [...fields.values()],
+            database.sendCsv({
+                head: fields,
                 body: dataset
-            }, dataset[0].type.split(' ').join('_').replace('-', '_').toLowerCase());
+            }, formattedType);
         })
     }
 
@@ -57,13 +58,13 @@ class DataExporter {
 
     /**
      * @param set
-     * @return {Set<any>}
+     * @return {Array}
      * @private
      */
     _collectTypenames(set) {
         /**
          * Using a Set because we don't want double entries
-         * @type {Set<any>}
+         * @type {Set}
          */
         const fields = new Set();
 
@@ -75,7 +76,7 @@ class DataExporter {
             });
         });
 
-        return fields;
+        return [...fields.values()];
     }
 
     /**

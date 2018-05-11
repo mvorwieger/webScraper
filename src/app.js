@@ -1,5 +1,5 @@
 //imports
-const {getApiUrl, getLoginUrl} = require('./uri.js');
+const {getApiUrl, getLoginUrl, getReferrerUrl} = require('./util/uri.js');
 
 /**
  * Dotenv
@@ -15,7 +15,7 @@ const Nightmare = require('nightmare');
 const nightmare = Nightmare({
     show: true,
     openDevTools: {mode: 'detach'},
-    typeInterval: 1
+    typeInterval: 10
 });
 
 // Account-Data we need to login to the website
@@ -26,16 +26,23 @@ process.env.password ? password = process.env.password : console.log("Please spe
 
 function startScraping() {
     //Emulate login into the Website to prevent the csrf protection
-    nightmare.useragent('chrome')
+    nightmare.useragent(getUserAgent())
+        .viewport(1680, 1050)
         .goto(getLoginUrl())
         .type('input#u', username)
+        .wait(getRandomInt(1, 5) * 1000)
         .type('input#p', password)
+        .wait(getRandomInt(1, 5) * 1000)
         .click('input#signinButton')
         .wait('.content')
+        .wait('.toolbar > .horzNoScroll > :nth-child(2) > a')
+        .wait(getRandomInt(1, 5) * 1000)
+        .click('.toolbar > .horzNoScroll > :nth-child(2) > a')
+        .wait(getRandomInt(1, 5) * 1000)
         .goto(getApiUrl())
         .wait('pre')
-        .evaluate(() => document.body.innerHTML)
         .end()
+        .evaluate(() => document.body.innerHTML)
         .then(backEndResponse => {
             const dataHandler = new DataController(backEndResponse)
             dataHandler.startFiltering();

@@ -13,7 +13,7 @@ class DataFilter {
         let db = new DataBase(process.env.dbhost, process.env.dbuser, process.env.dbpassword, process.env.dbname);
         let exporter = new DataExporter(this._filterOutData(this.htmlData));
 
-        exporter.exportToDatabase(db);
+        //exporter.exportToDatabase(db);
         exporter.exportAsJSONTo('data.json');
         exporter.exportAsCSV();
     }
@@ -41,12 +41,14 @@ class DataFilter {
         return DataFormatter.gatherByTypes(exportData, typeNamesCollection);
     }
 
-     _findDataStructur(cheerioChildInstance) {
+     _findDataStructure(cheerioChildInstance) {
         const $ = this.$;
-        const specDataArr = cheerioChildInstance;
         const dataStructure = [];
 
-        specDataArr.each(function() {
+         /**
+          * using each and push here because the $.each method has a weird api
+          */
+         cheerioChildInstance.each(function() {
             dataStructure.push({
                 label: $(this).find('.label').text(),
                 value: parseFloat($(this).find('.value').text()),
@@ -62,7 +64,7 @@ class DataFilter {
             const childInstance = cheerio.load(data);
             const type = childInstance('.title span').text();
             const datetime = childInstance('.datetime').text();
-            let convertedData = this._findDataStructur(childInstance('.kpi'));
+            let convertedData = this._findDataStructure(childInstance('.kpi'));
             this._gatherTypenames(typeCollection, type);
 
             convertedData = DataFormatter.createObjectOutOfArr(convertedData);
@@ -74,6 +76,7 @@ class DataFilter {
             }
         });
     }
+
     _gatherTypenames(list, typeToSearchFor) {
         if (!list.find((typeInArr) => typeInArr === typeToSearchFor)) {
             list.push(typeToSearchFor);
