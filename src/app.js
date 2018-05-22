@@ -44,7 +44,7 @@ function startScraping() {
         .wait('pre')
         .end()
         .evaluate(() => document.body.innerHTML)
-        .then(new DataController)
+        .then(res => new DataController(res).controll())
         .catch(console.error);
 }
 //TODO: add scheduler Option
