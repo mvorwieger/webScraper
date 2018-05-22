@@ -15,3 +15,5 @@ const UserAgents = [
 function getUserAgent() {
     return UserAgents[getRandomInt(0, UserAgents.length - 1)]
 }
+
+module.exports = getUserAgent;

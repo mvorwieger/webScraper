@@ -1,12 +1,13 @@
 //imports
 const {getApiUrl, getLoginUrl, getReferrerUrl} = require('./util/uri.js');
-
+const getUserAgent = require('./util/userAgent.js');
+const getRandomInt = require('./util/randomInt.js');
 /**
  * Dotenv
  * Needed for loading our environment variables on a local build
  */
 require('dotenv').config();
-const DataController = require('./DataFilter.js');
+const DataController = require('./DataController.js');
 /**
  * Used to emulate user behaviour on their website to prevent web scraping preventions build into their site
  * @type {Nightmare}
@@ -43,10 +44,7 @@ function startScraping() {
         .wait('pre')
         .end()
         .evaluate(() => document.body.innerHTML)
-        .then(backEndResponse => {
-            const dataHandler = new DataController(backEndResponse)
-            dataHandler.startFiltering();
-        })
+        .then(new DataController)
         .catch(console.error);
 }
 //TODO: add scheduler Option

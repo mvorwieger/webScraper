@@ -9,14 +9,6 @@ class DataFilter {
         this.htmlData = htmlData;
     }
 
-    startFiltering() {
-        let db = new DataBase(process.env.dbhost, process.env.dbuser, process.env.dbpassword, process.env.dbname);
-        let exporter = new DataExporter(this._filterOutData(this.htmlData));
-
-        //exporter.exportToDatabase(db);
-        exporter.exportAsJSONTo('data.json');
-        exporter.exportAsCSV();
-    }
 
     /**
      * Gives us the important data of the html templates
@@ -26,9 +18,9 @@ class DataFilter {
      *              type,
      *              ...specificData
      *          }
-     * @private
+     *
      */
-     _filterOutData(data) {
+     filterOutData(data) {
         const cheerioData = this.$;
         const parsedData = JSON.parse(cheerioData('pre').text());
         const pureDataArr = parsedData.data
